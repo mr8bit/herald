@@ -1,7 +1,7 @@
 ## Herald - one for all
 Herald - one bot, many messengers
 
-[:us:](readme.md)[:ru:](readme_rus.md)
+Choose language: [:us:](readme.md) [:ru:](readme_rus.md)
 
  
 

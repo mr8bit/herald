@@ -1,6 +1,7 @@
 ## Herald - один за всех
 Herald - один бот для всех мессенджеров
-[:us:](readme.md)[:ru:](readme_rus.md)
+
+Выберите язык:  [:us:](readme.md) [:ru:](readme_rus.md)
 
 Проект находится на стадии развития и не является стабильной версией
 
@@ -73,15 +74,15 @@ class BootStrapState(State):
 Как отправлять сообщения? И что находиться в тригере?
 
 ```python
-trigger.text - Текст от пользователя 
-trigger.messenger - месенджер от которого пришло сообщение 0 - Telegram 1 - Viber 
-trigger.user_id - id пользователя/чата chat_id в Телеграм user_id в Viber 
-trigger.state - состояние пользователя, экземпляр класса  
-trigger.get_user() - Возвращяет пользователя из bd Django model
-trigger.create_user() - Создание пользователя
-trigger.send_photo(image_path) - Отправка фотографии image_path - путь к фотографии
-trigger.send_message(message) - Отправка сообщения message - текст сообщения
-trigger.send_keyboard(message, buttons) - Отправка сообщения c клавиатурой message - текст сообщения buttons - массив кнопок
+trigger.text # Текст от пользователя 
+trigger.messenger # месенджер от которого пришло сообщение 0 - Telegram 1 - Viber 
+trigger.user_id # id пользователя/чата chat_id в Телеграм user_id в Viber 
+trigger.state # состояние пользователя, экземпляр класса  
+trigger.get_user() # Возвращяет пользователя из bd Django model
+trigger.create_user() # Создание пользователя
+trigger.send_photo(image_path) # Отправка фотографии image_path - путь к фотографии
+trigger.send_message(message) # Отправка сообщения message - текст сообщения
+trigger.send_keyboard(message, buttons) # Отправка сообщения c клавиатурой message - текст сообщения buttons - массив кнопок
 ```
 
 
