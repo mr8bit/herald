@@ -1,5 +1,6 @@
 ## Herald - one for all
 Herald - one bot, many messengers
+
 [:us:](readme.md)[:ru:](readme_rus.md)
 
  
@@ -74,15 +75,15 @@ class BootStrapState(State):
 How to send messages? And what is in the triger?
 
 ```python
-trigger.text - Text from user 
-trigger.messenger - the messenger from which the message came 0 - Telegram 1 - Viber 
-trigger.user_id - id user/chat, chat_id in Telegram, user_id in Viber 
-trigger.state - user state, class instance  
-trigger.get_user() - Returns a user from bd Django model
-trigger.create_user() - Create user
-trigger.send_photo(image_path) - Send photos image_path - photo path
-trigger.send_message(message) - Posting a message message - Message text
-trigger.send_keyboard(message, buttons) - Send a message with the keyboard message - Message text buttons - text array
+trigger.text # Text from user 
+trigger.messenger # the messenger from which the message came 0 - Telegram 1 - Viber 
+trigger.user_id # id user/chat, chat_id in Telegram, user_id in Viber 
+trigger.state # user state, class instance  
+trigger.get_user() # Returns a user from bd Django model
+trigger.create_user() # Create user
+trigger.send_photo(image_path) # Send photos image_path - photo path
+trigger.send_message(message) # Posting a message message - Message text
+trigger.send_keyboard(message, buttons) # Send a message with the keyboard message - Message text buttons - text array
 ```
 
 Based on libraries:
