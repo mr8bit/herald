@@ -21,3 +21,11 @@ DJANGO_TELEGRAMBOT = {
         },
     ],
 }
+
+VK_BOT = {
+    'MODE': 'WEBHOOK',
+    'WEBHOOK_SITE': WEBHOOK_SITE,
+    'WEBHOOK_PREFIX': '/vk',
+    'CONFIRMATION_TOKEN': '<VK_CONFIRMATION_TOKEN>',
+    'API_TOKEN': '<VK_API_TOKEN>'
+}

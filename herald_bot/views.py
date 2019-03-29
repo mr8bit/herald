@@ -11,6 +11,8 @@ from telegram.error import (TelegramError)
 from herald_bot.apps import DjangoTelegramBot
 from herald_bot.handlers.viber.request_handler import ViberRequestHandler
 
+from herald_bot.handlers.vk.request_handler import VKRequestHandler
+
 logger = logging.getLogger(__name__)
 
 
@@ -26,6 +28,19 @@ def viber_bot(request):
         response = viber_request_handler.parse(request)
     return HttpResponse()
 
+@csrf_exempt
+def vk_bot(request):
+    """
+        Урл для работы vk
+    :param request:
+    :return:
+    """
+
+    if request.method == 'POST':
+        vk_request_handler = VKRequestHandler.create_instance()
+        response = vk_request_handler.parse(request)
+        return response
+    return HttpResponse()
 
 @csrf_exempt
 def webhook(request, bot_token):
