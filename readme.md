@@ -10,9 +10,9 @@ The project is under development and is not a stable version.
 Currently the project only supports:
 - <img src="https://www.securitylab.ru/upload/iblock/65d/65d8b265716611fc4358aeb0a2b3e56e.png" width="25"> Viber 
 - <img src="https://lh3.googleusercontent.com/u1DT1-_6FLTqldVf9fplZoMQ2leaP-Szgej3AuGXOjmUbaTbWWu8OxURE3QtmEgxam20R7yr3Q=w128-h128-e365" width="25"> Telegram 
+- <img src="http://primrep.ru/wp-content/uploads/2017/02/VK.jpg" width="25"> Vk
 
 In the plans: 
-- <img src="http://primrep.ru/wp-content/uploads/2017/02/VK.jpg" width="25"> Vk
 - <img src="https://infoinspired.com/wp-content/uploads/2014/02/facebook-friends.png" width="25"> Facebook
 - <img src="https://cdn6.aptoide.com/imgs/4/6/1/461638042f6303c2860627f842116ccd_icon.png?w=256" width="25"> WhatsApp
 
@@ -90,4 +90,5 @@ Based on libraries:
 - [django-telegrambot](https://github.com/JungDev/django-telegrambot)
 - [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot)
 - [viber-bot-python](https://github.com/Viber/viber-bot-python)
+- [vk_api](https://github.com/python273/vk_api)
 
