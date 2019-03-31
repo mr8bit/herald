@@ -70,13 +70,10 @@ class VKTrigger(BaseTrigger):
         :param image_path: Путь на самом сервере
         :return:
         """
-        pass
-        #upload = vk_api.VkUpload(self.client)
-        #photos = upload.photo_messages(image_path)
-        #attachments = [f"photo{photo['owner_id']}_{photo['id']}" for photo in photos]
-        #print(attachments)
-        #self.client.get_api().messages.send(
-        #    user_id = self.user_id,
-        #    message = 'image',
-        #    random_id=get_random_id(),
-        #    attachments=','.join(attachments))
+        upload = vk_api.VkUpload(self.client)
+        photo = upload.photo_messages(image_path)[0]
+        attachment = f"photo{photo['owner_id']}_{photo['id']}"
+        self.client.get_api().messages.send(
+            user_id = self.user_id,
+            random_id=get_random_id(),
+            attachment=attachment)
