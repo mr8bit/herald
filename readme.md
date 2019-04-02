@@ -113,4 +113,5 @@ Based on libraries:
 - [django-telegrambot](https://github.com/JungDev/django-telegrambot)
 - [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot)
 - [viber-bot-python](https://github.com/Viber/viber-bot-python)
+- [vk_api](https://github.com/python273/vk_api)
 
