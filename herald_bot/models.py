@@ -7,7 +7,7 @@ class User(models.Model):
         Модель пользователя
     """
 
-    choices = ((0, 'Telegram'), (1, 'Viber'), (2, 'VK'))
+    choices = ((0, 'Telegram'), (1, 'Viber'), (2, 'VK'), (3, 'Facebook'))
     user_id = models.CharField(max_length=300, default='', primary_key=True, verbose_name="ID Пользователя")
     messenger = models.IntegerField(choices=choices, verbose_name="Мессенджер")
     read_invitation = models.BooleanField(default=False)
