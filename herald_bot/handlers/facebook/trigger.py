@@ -1,21 +1,18 @@
 import logging
 
-import vk_api
 from django.conf import settings
 from herald_bot.handlers.core.trigger import BaseTrigger
 
-from herald_bot.handlers.core.trigger import BaseTrigger
-from herald_bot.handlers.utils.helpers import make_keyboard_vk
-from herald_bot.models import User
+from pymessenger.bot import Bot
 
-from vk_api.utils import get_random_id
+from herald_bot.handlers.core.trigger import BaseTrigger
+from herald_bot.models import User
 
 logger = logging.getLogger(__name__)
 
-
-class VKTrigger(BaseTrigger):
+class FacebookTrigger(BaseTrigger):
     """
-        VK триггер для State Machine
+        Facebook триггер для State Machine
     """
 
     def send_keyboard(self, message, buttons, whom=None):
@@ -26,18 +23,18 @@ class VKTrigger(BaseTrigger):
         :param whom: id чата для отправки
         :return: None
         """
-        self.client.get_api().messages.send(
-            user_id = self.user_id,
-            message = message,
-            random_id=get_random_id(),
-            keyboard=make_keyboard_vk(buttons)
-        )
+
+        self.client.send_message(self.user_id, {
+            "text": message,
+            "quick_replies":[{ 
+                "content_type" : "text",
+                "title": b,
+                "payload": b
+                } for b in buttons]
+        })
 
     def send_message(self, message, whom=None):
-        self.client.get_api().messages.send(
-            user_id = self.user_id,
-            message = message,
-            random_id=get_random_id())
+        self.client.send_text_message(self.user_id, message)
 
     def get_user(self, whom=None):
         """
@@ -70,10 +67,5 @@ class VKTrigger(BaseTrigger):
         :param image_path: Путь на самом сервере
         :return:
         """
-        upload = vk_api.VkUpload(self.client)
-        photo = upload.photo_messages(image_path)[0]
-        attachment = f"photo{photo['owner_id']}_{photo['id']}"
-        self.client.get_api().messages.send(
-            user_id = self.user_id,
-            random_id=get_random_id(),
-            attachment=attachment)
+        
+        self.client.send_image(self.user_id, image_path)

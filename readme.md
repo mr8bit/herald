@@ -11,9 +11,10 @@ Currently the project only supports:
 - <img src="https://www.securitylab.ru/upload/iblock/65d/65d8b265716611fc4358aeb0a2b3e56e.png" width="25"> Viber 
 - <img src="https://lh3.googleusercontent.com/u1DT1-_6FLTqldVf9fplZoMQ2leaP-Szgej3AuGXOjmUbaTbWWu8OxURE3QtmEgxam20R7yr3Q=w128-h128-e365" width="25"> Telegram 
 - <img src="http://primrep.ru/wp-content/uploads/2017/02/VK.jpg" width="25"> Vk
+- <img src="https://infoinspired.com/wp-content/uploads/2014/02/facebook-friends.png" width="25"> Facebook
 
 In the plans: 
-- <img src="https://infoinspired.com/wp-content/uploads/2014/02/facebook-friends.png" width="25"> Facebook
+
 - <img src="https://cdn6.aptoide.com/imgs/4/6/1/461638042f6303c2860627f842116ccd_icon.png?w=256" width="25"> WhatsApp
 
 How to use?
@@ -50,6 +51,28 @@ DJANGO_TELEGRAMBOT = {
         },
     ],
 }
+```
+
+##### Facebook settings
+
+Setting up a Facebook bot is a hassle.
+
+Facebook support based on this library:
+https://github.com/qwe345asd/pymessenger
+
+```
+pip install git+https://github.com/qwe345asd/pymessenger
+```
+
+```python
+FACEBOOK_BOT = {
+    'MODE': 'WEBHOOK',
+    'WEBHOOK_SITE': WEBHOOK_SITE,
+    'WEBHOOK_PREFIX': '/facebook',
+    'ACCESS_TOKEN': '<FACEBOOK_ACCESS_TOKEN>',
+    'VERIFY_TOKEN': '<FACEBOOK_VERIFY_TOKEN>'
+}
+
 ```
 
 ##### About code

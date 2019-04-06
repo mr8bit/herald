@@ -12,6 +12,7 @@ from herald_bot.apps import DjangoTelegramBot
 from herald_bot.handlers.viber.request_handler import ViberRequestHandler
 
 from herald_bot.handlers.vk.request_handler import VKRequestHandler
+from herald_bot.handlers.facebook.request_handler import FacebookRequestHandler
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +42,17 @@ def vk_bot(request):
         response = vk_request_handler.parse(request)
         return response
     return HttpResponse()
+
+@csrf_exempt
+def facebook_bot(request):
+    """
+        Урл для работы facebook
+    :param request:
+    :return:
+    """
+    facebook_request_handler = FacebookRequestHandler.create_instance()
+    response = facebook_request_handler.parse(request)
+    return response
 
 @csrf_exempt
 def webhook(request, bot_token):
