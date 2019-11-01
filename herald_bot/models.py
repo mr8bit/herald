@@ -15,6 +15,7 @@ class User(models.Model):
     first_name = models.CharField(max_length=300, default='', blank=True, null=True, verbose_name="Имя")
     second_name = models.CharField(max_length=300, default='', blank=True, null=True, verbose_name="Фамилия")
     state = models.CharField(max_length=300, blank=True, null=True)
+    prev_state = models.CharField(max_length=300, blank=True, null=True)
 
     # Значения модификаторы
 

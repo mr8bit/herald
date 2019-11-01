@@ -1,6 +1,14 @@
 import difflib
+import requests
+from bs4 import BeautifulSoup
 
 
 def check_group(group):
-    existing_group = ["М3З-101А-19","М3О-102А-19","М3О-103А-19","М3О-104А-19","М3О-105А-19","М3О-106А-19","М3О-107А-19","М3О-108А-19","М3О-110А-19","М3О-111А-19","М3О-112А-19","М3О-114А-19","М3О-115А-19","М3О-116А-19","М3О-117А-19","М3О-118А-19","М3О-119А-19","М3О-120А-19","М3О-101С-19","М3О-102С-19","М3О-103С-19","М3О-104С-19","М3О-106С-19"]
-    return difflib.get_close_matches(group, existing_group)[0]
+    page = requests.get('https://mai.ru/education/schedule/')
+    soup = BeautifulSoup(page.text, "html.parser")
+    link_group = soup.findAll("a", {"class": "sc-group-item"})
+    groups = []
+    for item in link_group:
+        groups.append(item.text.strip())
+    match = difflib.get_close_matches(group, groups)
+    return match[0]

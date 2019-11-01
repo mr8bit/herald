@@ -3,7 +3,7 @@ ALLOWED_HOSTS = [
 ]
 import os
 
-WEBHOOK_SITE = ''
+WEBHOOK_SITE = 'https://03bd1506.ngrok.io'
 
 VIBER_BOT = {
     'ENABLE': False,
@@ -17,7 +17,7 @@ TELEGRAM_BOT = {
     'MODE': 'WEBHOOK',
     'WEBHOOK_SITE': WEBHOOK_SITE,
     'WEBHOOK_PREFIX': 'telegram',
-    'TOKEN': '',
+    'TOKEN': os.getenv('TELEGRAM_TOKEN'),
     'PROXY': None
 }
 
@@ -26,8 +26,8 @@ VK_BOT = {
     'MODE': 'WEBHOOK',
     'WEBHOOK_SITE': WEBHOOK_SITE,
     'WEBHOOK_PREFIX': 'vk',
-    'CONFIRMATION_TOKEN': '',
-    'API_TOKEN': ''
+    'CONFIRMATION_TOKEN': os.getenv('CONFIRMATION_TOKEN'),
+    'API_TOKEN': os.getenv('API_TOKEN')
 }
 
 FACEBOOK_BOT = {

@@ -26,7 +26,7 @@ def make_keyboard(buttons):
 
     return keyboard
 
-def divide_chunks(l, n=4): 
+def divide_chunks(l, n=1):
     for i in range(0, len(l), n):  
         yield l[i:i + n] 
   

@@ -15,13 +15,13 @@ class StateMachine:
 
     def fire(self, trigger):
         self.state = trigger.state
-        usr = trigger.get_user()
 
         print('STATE BEFORE', self.state)
 
         if self.state is None:
             try:
-                prev_state = usr.state
+                prev_state = trigger.get_user().prev_state
+                print(prev_state)
                 module_name, class_name = prev_state.rsplit(".", 1)
                 instance = getattr(importlib.import_module(module_name), class_name)
                 self.state = instance()
@@ -41,7 +41,9 @@ class StateMachine:
                 new_state = instance()
             except Exception as e:
                 pass
-        usr.state = new_state
+        usr = trigger.get_user()
+        usr.state = new_state # текущее положение пользователя
+        usr.prev_state = self.state # прошлое положение пользователя
         usr.save()
         print('SAVE STATE', new_state)
 

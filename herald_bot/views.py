@@ -38,6 +38,7 @@ def vk_bot(request):
     """
 
     if request.method == 'POST':
+        print(request.body.decode('utf-8'))
         vk_request_handler = VKRequestHandler.create_instance()
         response = vk_request_handler.parse(request)
         return response

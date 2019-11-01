@@ -48,11 +48,13 @@ class VKRequestHandler:
         try:
             data = json.loads(request.body)
             if data['type'] == 'confirmation':
+                print(data)
                 return HttpResponse(settings.VK_BOT.get('CONFIRMATION_TOKEN'))
             if data['type'] != 'message_new' or self.p_msg == request.body:
-                return HttpResponse()
+                return HttpResponse("ok")
 
             self.p_msg = request.body
+            print(request.body)
             trigger = create_trigger_from_request(data, self.vk_client)
             self.state_machine.fire(trigger)
 
