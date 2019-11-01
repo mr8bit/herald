@@ -77,3 +77,17 @@ class VKTrigger(BaseTrigger):
             user_id = self.user_id,
             random_id=get_random_id(),
             attachment=attachment)
+
+    def send_file(self, file_path):
+        """
+            Отправка документа
+       :param file_path: Путь на самом сервере
+       :return:
+        """
+        upload = vk_api.VkUpload(self.client)
+        document = upload.document_message(file_path)[0]
+        attachment = f"doc{document['owner_id']}_{document['id']}"
+        self.client.get_api().messages.send(
+            user_id=self.user_id,
+            random_id=get_random_id(),
+            attachment=attachment)

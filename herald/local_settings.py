@@ -3,36 +3,38 @@ ALLOWED_HOSTS = [
 ]
 import os
 
-WEBHOOK_SITE = '<WEBHOOK_SITE_HERE>'
+WEBHOOK_SITE = ''
 
 VIBER_BOT = {
-    "VIBER_BOT_NAME": os.getenv('VIBER_BOT_NAME', '<NAME_BOT>'),
+    'ENABLE': False,
     "VIBER_AUTH_TOKEN": os.getenv('VIBER_AUTH_TOKEN', '<TOKEN_VIBER_BOT>'),
-    "VIBER_AVATAR": os.getenv('VIBER_AVATAR', '<ULR_IMAGE_BOT>'),
     'WEBHOOK_SITE': WEBHOOK_SITE,
-    'WEBHOOK_PREFIX':
-    '/viber',  # (Optional[str]) # If this value is specified,
+    'WEBHOOK_PREFIX':'viber',  # (Optional[str]) # If this value is specified,
 }
 
-DJANGO_TELEGRAMBOT = {
+TELEGRAM_BOT = {
+    'ENABLE': False,
     'MODE': 'WEBHOOK',
     'WEBHOOK_SITE': WEBHOOK_SITE,
-    'WEBHOOK_PREFIX': '/bot',
-    'TOKEN': '<TOKEN_TELEGRAM_BOT>',
+    'WEBHOOK_PREFIX': 'telegram',
+    'TOKEN': '',
+    'PROXY': None
 }
 
 VK_BOT = {
+    'ENABLE': True,
     'MODE': 'WEBHOOK',
     'WEBHOOK_SITE': WEBHOOK_SITE,
-    'WEBHOOK_PREFIX': '/vk',
-    'CONFIRMATION_TOKEN': '<VK_CONFIRMATION_TOKEN>',
-    'API_TOKEN': '<VK_API_TOKEN>'
+    'WEBHOOK_PREFIX': 'vk',
+    'CONFIRMATION_TOKEN': '',
+    'API_TOKEN': ''
 }
 
 FACEBOOK_BOT = {
+    'ENABLE': False,
     'MODE': 'WEBHOOK',
     'WEBHOOK_SITE': WEBHOOK_SITE,
-    'WEBHOOK_PREFIX': '/facebook',
+    'WEBHOOK_PREFIX': 'facebook',
     'ACCESS_TOKEN': '<FACEBOOK_ACCESS_TOKEN>',
     'VERIFY_TOKEN': '<FACEBOOK_VERIFY_TOKEN>'
 }

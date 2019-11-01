@@ -55,6 +55,7 @@ class VKRequestHandler:
             self.p_msg = request.body
             trigger = create_trigger_from_request(data, self.vk_client)
             self.state_machine.fire(trigger)
+
         except Exception as e:
             logger.warning(f'receive invalid request. {e}')
         

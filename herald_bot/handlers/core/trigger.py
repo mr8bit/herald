@@ -6,7 +6,7 @@ class BaseTrigger:
     def __init__(self, client, user_id, messenger, text, user_state):
         """
             Инициализация класса
-        :param client: API для работы и отпаврки сообщений
+        :param client: API для работы и отправки сообщений
         :param user_id: id пользователя для отправки сообщения
         :param messenger: Мессенджер с коротого пришло сообщение
         :param text: текст от пользователя
@@ -31,4 +31,10 @@ class BaseTrigger:
         pass
 
     def send_photo(self, image_path):
+        pass
+
+    def send_file(selfs, file_path):
+        pass
+
+    def send_map(self, lng, lat):
         pass

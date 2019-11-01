@@ -122,22 +122,22 @@ class DjangoTelegramBot(AppConfig):
         return cls.get_updater(id, safe)
 
     def ready(self):
-        if DjangoTelegramBot.ready_run:
+        bot_data = settings.TELEGRAM_BOT
+        if DjangoTelegramBot.ready_run or not bot_data['ENABLE']:
             return
         DjangoTelegramBot.ready_run = True
 
         self.mode = WEBHOOK_MODE
-        if settings.DJANGO_TELEGRAMBOT.get('MODE', 'WEBHOOK') == 'POLLING':
+        if settings.TELEGRAM_BOT.get('MODE', 'WEBHOOK') == 'POLLING':
             self.mode = POLLING_MODE
 
         modes = ['WEBHOOK', 'POLLING']
         logger.info('Django Telegram Bot <{} mode>'.format(modes[self.mode]))
 
-        bot_data = settings.DJANGO_TELEGRAMBOT
+        bot_data = settings.TELEGRAM_BOT
 
         if self.mode == WEBHOOK_MODE:
-            webhook_site = settings.DJANGO_TELEGRAMBOT.get(
-                'WEBHOOK_SITE', None)
+            webhook_site = settings.TELEGRAM_BOT.get('WEBHOOK_SITE', None)
             if not webhook_site:
                 logger.warn(
                     'Required TELEGRAM_WEBHOOK_SITE missing in settings')
@@ -145,14 +145,14 @@ class DjangoTelegramBot(AppConfig):
             if webhook_site.endswith("/"):
                 webhook_site = webhook_site[:-1]
 
-            webhook_base = settings.DJANGO_TELEGRAMBOT.get(
+            webhook_base = settings.TELEGRAM_BOT.get(
                 'WEBHOOK_PREFIX', '/')
             if webhook_base.startswith("/"):
                 webhook_base = webhook_base[1:]
             if webhook_base.endswith("/"):
                 webhook_base = webhook_base[:-1]
 
-            cert = settings.DJANGO_TELEGRAMBOT.get('WEBHOOK_CERTIFICATE', None)
+            cert = settings.TELEGRAM_BOT.get('WEBHOOK_CERTIFICATE', None)
             certificate = None
             if cert and os.path.exists(cert):
                 logger.info('WEBHOOK_CERTIFICATE found in {}'.format(cert))
@@ -201,8 +201,7 @@ class DjangoTelegramBot(AppConfig):
                         Dispatcher(bot, None, workers=0))
                     hookurl = '{}/{}/{}/'.format(webhook_site, webhook_base,
                                                  token)
-                    max_connections = bot_data.get('WEBHOOK_MAX_CONNECTIONS',
-                                                   40)
+                    max_connections = bot_data.get('WEBHOOK_MAX_CONNECTIONS',40)
                     setted = bot.setWebhook(hookurl,
                                             certificate=certificate,
                                             timeout=timeout,
@@ -260,7 +259,7 @@ class DjangoTelegramBot(AppConfig):
                     logger.debug('Run {}'.format(module_name))
 
             except ImportError as er:
-                if settings.DJANGO_TELEGRAMBOT.get('STRICT_INIT'):
+                if settings.TELEGRAM_BOT.get('STRICT_INIT'):
                     raise er
                 else:
                     logger.error('{} : {}'.format(module_name, repr(er)))

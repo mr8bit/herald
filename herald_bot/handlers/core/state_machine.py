@@ -7,16 +7,28 @@ class StateMachine:
     """
 
     def __init__(self, initial_state):
+        """
+
+        :param initial_state: Начальное состояние пользователя, там где он всегда нахохиться
+        """
         self.initial_state = initial_state
 
     def fire(self, trigger):
         self.state = trigger.state
+        usr = trigger.get_user()
 
         print('STATE BEFORE', self.state)
 
         if self.state is None:
-            self.state = self.initial_state
-            new_state = self.state.on_trigger(trigger)
+            try:
+                prev_state = usr.state
+                module_name, class_name = prev_state.rsplit(".", 1)
+                instance = getattr(importlib.import_module(module_name), class_name)
+                self.state = instance()
+                new_state = self.state.on_trigger(trigger)
+            except:
+                self.state = self.initial_state
+                new_state = self.state.on_trigger(trigger)
             # self.state.on_enter(trigger)
             # trigger.get_user().state = self.state
         else:
@@ -29,9 +41,10 @@ class StateMachine:
                 new_state = instance()
             except Exception as e:
                 pass
-        usr = trigger.get_user()
         usr.state = new_state
         usr.save()
+        print('SAVE STATE', new_state)
+
         self.to_state(new_state, trigger)
 
         trigger.state = self.state

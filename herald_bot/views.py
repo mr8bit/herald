@@ -15,7 +15,7 @@ from herald_bot.handlers.vk.request_handler import VKRequestHandler
 from herald_bot.handlers.facebook.request_handler import FacebookRequestHandler
 
 logger = logging.getLogger(__name__)
-
+import json
 
 @csrf_exempt
 def viber_bot(request):
