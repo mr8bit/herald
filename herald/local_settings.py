@@ -3,7 +3,7 @@ ALLOWED_HOSTS = [
 ]
 import os
 
-WEBHOOK_SITE = 'https://03bd1506.ngrok.io'
+WEBHOOK_SITE = os.getenv('WEBHOOK_SITE')
 
 VIBER_BOT = {
     'ENABLE': False,
