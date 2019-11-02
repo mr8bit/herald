@@ -18,6 +18,8 @@ class VKTrigger(BaseTrigger):
         VK триггер для State Machine
     """
 
+
+
     def send_keyboard(self, message, buttons, whom=None):
         """
             Отправка клавиатуры
@@ -59,6 +61,9 @@ class VKTrigger(BaseTrigger):
         """
         try:
             new_user = User.objects.create(user_id=self.user_id, messenger=self.messenger)
+            info = self.client.get_api().users.get(user_id=self.user_id)
+            new_user.first_name = info[0]['first_name']
+            new_user.second_name = info[0]['last_name']
             new_user.save()
         except Exception as e:
             logger.error("Error on crete user: {}".format(e))

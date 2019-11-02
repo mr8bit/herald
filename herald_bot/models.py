@@ -21,5 +21,6 @@ class User(models.Model):
 
     language = models.IntegerField(choices=lang, default=0)
     group = models.CharField(max_length=300, verbose_name="Номер группы", default="")
+
     def __str__(self):
         return "{} {}".format(self.first_name, self.second_name)

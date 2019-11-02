@@ -11,4 +11,7 @@ def check_group(group):
     for item in link_group:
         groups.append(item.text.strip())
     match = difflib.get_close_matches(group, groups)
-    return match[0]
+    try:
+        return match[0]
+    except:
+        return False

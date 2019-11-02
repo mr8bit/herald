@@ -9,7 +9,7 @@ from herald_bot.handlers.core.state_machine import StateMachine
 from herald_bot.states import BootStrapState
 
 from herald_bot.handlers.vk.trigger import VKTrigger
-
+from requests.exceptions import ConnectionError
 from django.http import HttpResponse
 
 logger = logging.getLogger(__name__)
@@ -58,7 +58,20 @@ class VKRequestHandler:
             trigger = create_trigger_from_request(data, self.vk_client)
             self.state_machine.fire(trigger)
 
+        except ConnectionError:
+            logger.warning('ConnectionError, try to connection')
+            data = json.loads(request.body)
+            if data['type'] == 'confirmation':
+                print(data)
+                return HttpResponse(settings.VK_BOT.get('CONFIRMATION_TOKEN'))
+            if data['type'] != 'message_new' or self.p_msg == request.body:
+                return HttpResponse("ok")
+            self.p_msg = request.body
+            print(request.body)
+            trigger = create_trigger_from_request(data, self.vk_client)
+            self.state_machine.fire(trigger)
+
         except Exception as e:
-            logger.warning(f'receive invalid request. {e}')
-        
+            logger.error(f'receive invalid request. {e}')
+
         return HttpResponse('ok')
