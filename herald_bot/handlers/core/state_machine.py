@@ -1,6 +1,6 @@
 import importlib
-
-
+import asyncio
+import datetime
 class StateMachine:
     """
         Машина состояния
@@ -13,37 +13,41 @@ class StateMachine:
         """
         self.initial_state = initial_state
 
+    @staticmethod
+    def str_to_class(str):
+        module_name, class_name = str.rsplit(".", 1)
+        instance = getattr(importlib.import_module(module_name), class_name)
+        return instance
+
     def fire(self, trigger):
         self.state = trigger.state
 
         print('STATE BEFORE', self.state)
 
-        if self.state is None:
-            try:
+        if self.state is None:  # Если экран не был передан, или пользователь только зашел
+            try:  # Если было предыдущее состояние
                 prev_state = trigger.get_user().prev_state
-                print(prev_state)
-                module_name, class_name = prev_state.rsplit(".", 1)
-                instance = getattr(importlib.import_module(module_name), class_name)
+                instance = self.str_to_class(prev_state)
                 self.state = instance()
+                print("0 Идем к  " + str(self.state) + str(datetime.datetime.now()))
                 new_state = self.state.on_trigger(trigger)
-            except:
+                print("0 Вышли из " + str(self.state)+ str(datetime.datetime.now()))
+            except:  # Если пользователь только зашел, то шлем его на начальный экран
                 self.state = self.initial_state
+                print("1 Идем к  " + str(self.state)+ str(datetime.datetime.now()))
                 new_state = self.state.on_trigger(trigger)
-            # self.state.on_enter(trigger)
-            # trigger.get_user().state = self.state
-        else:
-            module_name, class_name = self.state.rsplit(".", 1)
-            instance = getattr(importlib.import_module(module_name), class_name)
+                print("1 Вышли из " + str(self.state)+ str(datetime.datetime.now()))
+
+        else:  # Знаем на какой экран идти
+            instance = self.str_to_class(self.state)
             self.state = instance()
+            print("2 Идем к  "+ str(self.state)+ str(datetime.datetime.now()))
             new_state = self.state.on_trigger(trigger)
-            try:
-                instance = getattr(importlib.import_module(new_state.__module__), new_state.__name__)
-                new_state = instance()
-            except Exception as e:
-                pass
+            print("2 Вышли из " + str(self.state)+ str(datetime.datetime.now()))
+
         usr = trigger.get_user()
-        usr.state = new_state # текущее положение пользователя
-        usr.prev_state = self.state # прошлое положение пользователя
+        usr.state = new_state  # текущее положение пользователя
+        usr.prev_state = self.state  # прошлое положение пользователя
         usr.save()
         print('SAVE STATE', new_state)
 

@@ -17,8 +17,9 @@ class VKTrigger(BaseTrigger):
     """
         VK триггер для State Machine
     """
-
-
+    def __init__(self, client, user_id, messenger, text, user_state, api):
+        super(VKTrigger, self).__init__(client, user_id, messenger, text, user_state, api)
+        self.api = api
 
     def send_keyboard(self, message, buttons, whom=None):
         """
@@ -28,17 +29,17 @@ class VKTrigger(BaseTrigger):
         :param whom: id чата для отправки
         :return: None
         """
-        self.client.get_api().messages.send(
-            user_id = self.user_id,
-            message = message,
+        self.api.messages.send(
+            user_id=self.user_id,
+            message=message,
             random_id=get_random_id(),
             keyboard=make_keyboard_vk(buttons)
         )
 
     def send_message(self, message, whom=None):
-        self.client.get_api().messages.send(
-            user_id = self.user_id,
-            message = message,
+        self.api.messages.send(
+            user_id=self.user_id,
+            message=message,
             random_id=get_random_id())
 
     def get_user(self, whom=None):
@@ -53,7 +54,6 @@ class VKTrigger(BaseTrigger):
             logger.error("Error on get user: {}".format(e))
             return False
 
-
     def create_user(self):
         """
             Создание пользователя
@@ -61,13 +61,9 @@ class VKTrigger(BaseTrigger):
         """
         try:
             new_user = User.objects.create(user_id=self.user_id, messenger=self.messenger)
-            info = self.client.get_api().users.get(user_id=self.user_id)
-            new_user.first_name = info[0]['first_name']
-            new_user.second_name = info[0]['last_name']
             new_user.save()
         except Exception as e:
             logger.error("Error on crete user: {}".format(e))
-
 
     def send_photo(self, image_path):
         """
@@ -79,7 +75,7 @@ class VKTrigger(BaseTrigger):
         photo = upload.photo_messages(image_path)[0]
         attachment = f"photo{photo['owner_id']}_{photo['id']}"
         self.client.get_api().messages.send(
-            user_id = self.user_id,
+            user_id=self.user_id,
             random_id=get_random_id(),
             attachment=attachment)
 

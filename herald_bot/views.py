@@ -28,7 +28,8 @@ def viber_bot(request):
         viber_request_handler = ViberRequestHandler.create_instance()
         response = viber_request_handler.parse(request)
     return HttpResponse()
-
+import json
+import datetime
 @csrf_exempt
 def vk_bot(request):
     """
@@ -38,11 +39,10 @@ def vk_bot(request):
     """
 
     if request.method == 'POST':
-        print(request.body.decode('utf-8'))
         vk_request_handler = VKRequestHandler.create_instance()
         response = vk_request_handler.parse(request)
         return response
-    return HttpResponse()
+    return HttpResponse('Ok')
 
 @csrf_exempt
 def facebook_bot(request):

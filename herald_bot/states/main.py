@@ -10,7 +10,8 @@ class MainMenu(State):
             '🔜Расписание на завтра',
             '🗓️Расписание по дате',
             '👨‍✈️Расписание преподавателя',
-            '⚙Настройки'
+            '⚙Настройки',
+            '💁Помощь'
         ]
 
     def on_enter(self, trigger):
@@ -25,15 +26,17 @@ class MainMenu(State):
                 trigger.send_message("🙌Держи")
                 trigger.send_message(lessons)
             else:
-                trigger.send_message("🎉Завтра нету пар!🥳")
+                trigger.send_message("🥳Завтра нету пар!")
             return MainMenu()
-        if trigger.text == self.buttons[1]:
+        elif trigger.text == self.buttons[1]:
             return GetScheduleByDate()
-        if trigger.text == self.buttons[2]:
+        elif trigger.text == self.buttons[2]:
             trigger.send_message("Тут еще ничего нет")
             return MainMenu()
-        if trigger.text == self.buttons[3]:
+        elif trigger.text == self.buttons[3]:
             return settings.Settings()
+        else:
+            trigger.send_keyboard("Не понял вас ¯\_(ツ)_/¯\nВыберите один из пунктов", self.buttons)
 
 
 class GetScheduleByDate(State):

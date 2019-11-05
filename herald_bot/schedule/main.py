@@ -4,6 +4,7 @@ from urllib.parse import quote
 from urllib.request import urlopen
 import datetime
 import pytz
+from django.core.cache import cache
 
 
 def get_by_date(group, date):
@@ -61,18 +62,18 @@ def get_schedule(group):
     :param group: string representing student's group
     :return schedule: list of dicts <3
     """
-    marks = ['date', 'dow', 'start_time', 'end_time',
-             'title', 'lecturer', 'place', 'type']
+    marks = ['date', 'dow', 'start_time', 'end_time', 'title', 'lecturer', 'place', 'type']
     group = quote(group)
-    url = f"https://mai.ru/education/schedule/data/{group}.txt"
-
-    response = urlopen(url)
-    response = response.read()
-    schedule = response.decode('utf-8-sig')
-    schedule = list(set(schedule.split('\n')))
-    schedule = [data.split('\t') for data in schedule]
-    schedule = [dict(zip(marks, lesson)) for lesson in schedule]
-
+    schedule = cache.get(group)
+    if not schedule:
+        url = f"https://mai.ru/education/schedule/data/{group}.txt"
+        response = urlopen(url)
+        response = response.read()
+        schedule = response.decode('utf-8-sig')
+        schedule = list(set(schedule.split('\n')))
+        schedule = [data.split('\t') for data in schedule]
+        schedule = [dict(zip(marks, lesson)) for lesson in schedule]
+        cache.set(group, schedule)  # записыаем в кэш списки групп
     return schedule
 
 
